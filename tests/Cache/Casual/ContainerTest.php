@@ -95,29 +95,52 @@ class Cache_Casual_ContainerTest extends PHPUnit_Framework_TestCase
         return $container;
     }
 
+    /**
+     * Data provider of cache containers with DataFactory has long lifetime.
+     *
+     * @return array
+     */
     public function containerProvider()
     {
-        $dataFactory = new Cache_Casual_DataFactory(3600);
-        $memory = new Cache_Casual_Container_Memory;
-        $memory->setDataFactory($dataFactory);
-        $file = new Cache_Casual_Container_File(vfsStream::url('dir'));
-        $file->setDataFactory($dataFactory);
+        return $this->createContainersWithLifetime(3600);
+    }
+
+    /**
+     * Data provider of cache containers with DataFactory has no lifetime.
+     *
+     * @return array
+     */
+    public function zeroLifetimeContainerProvider()
+    {
+        return $this->createContainersWithLifetime(0);
+    }
+
+    /**
+     * Creation method for cache containers under test.
+     *
+     * @return array
+     */
+    protected function createContainersUnderTest()
+    {
         return array(
-            array($memory),
-            array($file),
+            new Cache_Casual_Container_Memory,
+            new Cache_Casual_Container_File(vfsStream::url('dir')),
         );
     }
 
-    public function zeroLifetimeContainerProvider()
+    /**
+     * Creation method for cache containers with DataFactory has lifetime.
+     *
+     * @return array
+     */
+    protected function createContainersWithLifetime($lifetime)
     {
-        $dataFactory = new Cache_Casual_DataFactory(0);
-        $memory = new Cache_Casual_Container_Memory;
-        $memory->setDataFactory($dataFactory);
-        $file = new Cache_Casual_Container_File(vfsStream::url('dir'));
-        $file->setDataFactory($dataFactory);
-        return array(
-            array($memory),
-            array($file),
-        );
+        $data = array();
+        foreach ($this->createContainersUnderTest() as $container) {
+            $dataFactory = new Cache_Casual_DataFactory($lifetime);
+            $container->setDataFactory($dataFactory);
+            $data[] = array($container);
+        }
+        return $data;
     }
 }
