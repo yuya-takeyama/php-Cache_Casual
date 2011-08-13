@@ -1,0 +1,123 @@
+<?php
+/**
+ * Test class for Cache_Casual_Container_***
+ */
+class Cache_Casual_ContainerTest extends PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
+        vfsStream::setup('dir');
+    }
+
+    /**
+     * @test
+     * @dataProvider containerProvider
+     */
+    public function get_should_be_the_data_it_is_set($container)
+    {
+        $input = $expected = 'bar';
+        $container->set('foo', $input);
+        $this->assertSame($expected, $container->get('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider zeroLifetimeContainerProvider
+     */
+    public function get_should_be_NULL_if_the_data_is_expired($container)
+    {
+        $container->set('foo', 'bar');
+        $this->assertNull($container->get('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider containerProvider
+     */
+    public function get_should_be_NULL_after_the_data_is_deleted($container)
+    {
+        $container->set('foo', 'bar');
+        $container->delete('foo');
+        $this->assertNull($container->get('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider containerProvider
+     */
+    public function has_should_be_true_if_the_data_specified_with_key_is_not_expired($container)
+    {
+        $container->set('foo', 'bar');
+        $this->assertTrue($container->has('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider containerProvider
+     */
+    public function has_should_be_false_if_the_data_specified_with_key_is_not_set($container)
+    {
+        $this->assertFalse($container->has('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider zeroLifetimeContainerProvider
+     */
+    public function has_should_be_false_if_the_data_specified_with_key_is_expired($container)
+    {
+        $container->set('foo', 'bar');
+        $this->assertFalse($container->has('foo'));
+    }
+
+    /**
+     * @test
+     * @dataProvider containerProvider
+     */
+    public function has_should_be_false_after_the_data_is_deleted($container)
+    {
+        $container->set('foo', 'bar');
+        $container->delete('foo');
+        $this->assertFalse($container->has('foo'));
+    }
+
+    /**
+     * Creation method for Cache_Casual_Container_Memory with lifetime.
+     *
+     * @param  int $lifetime
+     * @return Cache_Casual_Container_Memory
+     */
+    protected function createContainerWithLifetime($lifetime)
+    {
+        $dataFactory = new Cache_Casual_DataFactory($lifetime);
+        $container = new Cache_Casual_Container_Memory;
+        $container->setDataFactory($dataFactory);
+        return $container;
+    }
+
+    public function containerProvider()
+    {
+        $dataFactory = new Cache_Casual_DataFactory(3600);
+        $memory = new Cache_Casual_Container_Memory;
+        $memory->setDataFactory($dataFactory);
+        $file = new Cache_Casual_Container_File(vfsStream::url('dir'));
+        $file->setDataFactory($dataFactory);
+        return array(
+            array($memory),
+            array($file),
+        );
+    }
+
+    public function zeroLifetimeContainerProvider()
+    {
+        $dataFactory = new Cache_Casual_DataFactory(0);
+        $memory = new Cache_Casual_Container_Memory;
+        $memory->setDataFactory($dataFactory);
+        $file = new Cache_Casual_Container_File(vfsStream::url('dir'));
+        $file->setDataFactory($dataFactory);
+        return array(
+            array($memory),
+            array($file),
+        );
+    }
+}
