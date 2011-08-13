@@ -10,7 +10,7 @@ Just a draft!
 
 ```php
 <?php
-$container = new Cache_Casual_Container_Filesystem('/tmp');
+$container = new Cache_Casual_Container_File('/tmp');
 $cache = new Cache_Casual($container, 3600);
 
 if (isset($cache['article'])) {
