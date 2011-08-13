@@ -10,6 +10,9 @@ You can treat cache object just like a hash.
 
 ```php
 <?php
+require_once 'Cache/Casual.php';
+require_once 'Cache/Casual/Container/File.php';
+
 $container = new Cache_Casual_Container_File('/tmp');
 $cache = new Cache_Casual($container, 3600);
 
