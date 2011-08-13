@@ -10,11 +10,8 @@ Just a draft!
 
 ```php
 <?php
-$container = new Cache_Casual_Container_Filesystem(array(
-    'directory' => '/tmp',
-    'lifetime'  => 3600,
-));
-$cache = new Cache_Casual($container);
+$container = new Cache_Casual_Container_Filesystem('/tmp');
+$cache = new Cache_Casual($container, 3600);
 
 if (isset($cache['article'])) {
     $article = $cache['article']
