@@ -88,6 +88,16 @@ class Cache_Casual_Data
     }
 
     /**
+     * Gets the last modified time.
+     *
+     * @return DateTime
+     */
+    public function getLastModified()
+    {
+        return $this->_lastModified;
+    }
+
+    /**
      * Gets the current DateTime.
      *
      * @return DateTime
