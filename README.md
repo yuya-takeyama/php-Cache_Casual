@@ -6,8 +6,6 @@ Casual cache system for PHP.
 Synopsis
 --------
 
-Just a draft!
-
 ```php
 <?php
 $container = new Cache_Casual_Container_File('/tmp');
