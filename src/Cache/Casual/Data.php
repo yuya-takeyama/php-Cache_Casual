@@ -1,6 +1,11 @@
 <?php
 /**
- * Cache_Casual.
+ * Cache_Casual
+ *
+ * A casual way to cache your data with PHP.
+ *
+ * @package Cache_Casual
+ * @author  Yuya Takeyama <sign.of.the.wolf.pentagram at gmail.com>
  */
 
 /**
@@ -47,7 +52,7 @@ class Cache_Casual_Data
     }
 
     /**
-     * Whether the data's life time is expired.
+     * Whether the data's lifetime is expired.
      *
      * @return bool
      */
@@ -60,7 +65,7 @@ class Cache_Casual_Data
     }
 
     /**
-     * Whether the data's life time is *not* expired.
+     * Whether the data's lifetime is *not* expired.
      */
     public function isNotExpired()
     {

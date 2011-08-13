@@ -1,10 +1,15 @@
 <?php
 /**
- * Cache_Casual.
+ * Cache_Casual
+ *
+ * A casual way to cache your data with PHP.
+ *
+ * @package Cache_Casual
+ * @author  Yuya Takeyama <sign.of.the.wolf.pentagram at gmail.com>
  */
 
 /**
- * Abstract class of Cache_Casual_Container.
+ * Abstract class of Cache_Casual_Container_***.
  *
  * @author Yuya Takeyama
  */

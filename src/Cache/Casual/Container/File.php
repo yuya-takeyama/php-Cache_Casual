@@ -1,10 +1,17 @@
 <?php
 /**
- * Cache_Casual.
+ * Cache_Casual
+ *
+ * A casual way to cache your data with PHP.
+ *
+ * @package Cache_Casual
+ * @author  Yuya Takeyama <sign.of.the.wolf.pentagram at gmail.com>
  */
 
 /**
  * File cache container.
+ *
+ * Stores cache data as serialized format into file.
  *
  * @author Yuya Takeyama
  */

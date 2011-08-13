@@ -1,6 +1,11 @@
 <?php
 /**
  * Cache_Casual
+ *
+ * A casual way to cache your data with PHP.
+ *
+ * @package Cache_Casual
+ * @author  Yuya Takeyama <sign.of.the.wolf.pentagram at gmail.com>
  */
 
 require_once dirname(__FILE__) . '/Casual/Data.php';
@@ -10,6 +15,8 @@ require_once dirname(__FILE__) . '/Casual/ContainerAbstract.php';
 
 /**
  * Cache_Casual core.
+ *
+ * Acts as a facade of cache container.
  *
  * @author Yuya Takeyama
  */
@@ -54,7 +61,7 @@ class Cache_Casual implements ArrayAccess
     }
 
     /**
-     * Whether the data specified with key exists.
+     * Whether the data specified with key exists in cache container.
      *
      * @param  string $key
      * @return bool
