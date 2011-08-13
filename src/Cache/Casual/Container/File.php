@@ -101,7 +101,7 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
      */
     protected function _toJson(Cache_Casual_Data $data)
     {
-        return json_encode(array(
+        return serialize(array(
             'last_modified' => $data->getLastModified(),
             'lifetime'      => $data->getLifetime(),
             'content'       => $data->getContent(),
@@ -116,14 +116,10 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
      */
     protected function _fromJson($json)
     {
-        $data = json_decode($json, true);
-        $lastModified = new DateTime(
-            $data['last_modified']['date'],
-            new DateTimeZone($data['last_modified']['timezone'])
-        );
+        $data = unserialize($json);
         return new Cache_Casual_Data(array(
             'lifetime'      => $data['lifetime'],
-            'last_modified' => $lastModified,
+            'last_modified' => $data['last_modified'],
             'content'       => $data['content'],
         ));
     }
