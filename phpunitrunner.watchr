@@ -4,5 +4,5 @@ def run(cmd)
   system cmd
 end
 
-watch("^src/(.*).php")   { |m| run "tests/#{m[1]}Test.php" }
-watch("^tests/(.*).php") { |m| run "tests/#{m[1]}.php" }
+watch("^src/(.*).php")       { |m| run "tests/unit/#{m[1]}Test.php" }
+watch("^tests/(.*)Test.php") { |m| run "tests/#{m[1]}Test.php" }
