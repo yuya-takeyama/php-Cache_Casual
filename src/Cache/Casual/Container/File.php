@@ -41,7 +41,10 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
     {
         $data = $this->createData($value);
         $fp = fopen($this->_getFilePath($key), 'w');
-        fputs($fp, $this->_serialize($data));
+        if (flock($fp, LOCK_EX)) {
+            fputs($fp, $this->_serialize($data));
+            flock($fp, LOCK_UN);
+        }
         fclose($fp);
     }
 
