@@ -25,8 +25,7 @@ class Cache_Casual_DataFactory
     /**
      * Constructor.
      *
-     * @param array $params
-     *              - int lifetime The default lifetime.
+     * @param int $params The default lifetime.
      */
     public function __construct($defaultLifetime)
     {
