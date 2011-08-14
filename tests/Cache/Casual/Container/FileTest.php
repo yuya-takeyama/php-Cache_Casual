@@ -29,6 +29,15 @@ class Cache_Casual_Container_FileTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function has_should_be_false_if_the_cache_file_is_broken()
+    {
+        $this->setUpBrokenCacheFile('foo');
+        $this->assertFalse($this->container->has('foo'));
+    }
+
+    /**
      * Sets up broken cache file of specified cache key.
      *
      * @param  string $key
