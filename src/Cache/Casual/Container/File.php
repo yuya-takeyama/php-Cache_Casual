@@ -123,7 +123,10 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
      */
     protected function _fromJson($json)
     {
-        $data = unserialize($json);
+        $data = @unserialize($json);
+        if ($data === false) {
+            return NULL;
+        }
         return new Cache_Casual_Data(array(
             'lifetime'      => $data['lifetime'],
             'last_modified' => $data['last_modified'],
