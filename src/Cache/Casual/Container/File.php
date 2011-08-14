@@ -41,7 +41,7 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
     {
         $data = $this->createData($value);
         $fp = fopen($this->_getFilePath($key), 'w');
-        fputs($fp, $this->_toJson($data));
+        fputs($fp, $this->_serialize($data));
         fclose($fp);
     }
 
@@ -96,17 +96,17 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
     {
         if ($this->_fileExists($key)) {
             $file = $this->_getFilePath($key);
-            return $this->_fromJson(file_get_contents($file));
+            return $this->_unserialize(file_get_contents($file));
         }
     }
 
     /**
-     * Converts from Cache_Casual_Data to JSON string.
+     * Converts from Cache_Casual_Data to serialized string.
      *
      * @param  Cache_Casual_Data
      * @return string
      */
-    protected function _toJson(Cache_Casual_Data $data)
+    protected function _serialize(Cache_Casual_Data $data)
     {
         return serialize(array(
             'last_modified' => $data->getLastModified(),
@@ -116,14 +116,14 @@ class Cache_Casual_Container_File extends Cache_Casual_ContainerAbstract
     }
 
     /**
-     * Converts from JSON string to Cache_Casual_Data.
+     * Converts from serialized string to Cache_Casual_Data.
      *
-     * @param  string $json
+     * @param  string $serialized
      * @return Cache_Casual_Data
      */
-    protected function _fromJson($json)
+    protected function _unserialize($serialized)
     {
-        $data = @unserialize($json);
+        $data = @unserialize($serialized);
         if ($data === false) {
             return NULL;
         }
