@@ -55,7 +55,7 @@ class Cache_Casual_DataTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function getLastModified_should_be_the_DateTime_it_is_set_by_constructor()
+    public function getLastModified_should_be_the_timestamp_it_is_set_by_constructor()
     {
         $datetime = time();
         $data = new Cache_Casual_Data(array(
