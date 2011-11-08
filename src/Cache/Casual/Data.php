@@ -59,8 +59,7 @@ class Cache_Casual_Data
     public function isExpired()
     {
         $now      = $this->_getCurrentDateTime();
-        $interval = new DateInterval("PT{$this->_lifetime}S");
-        $expire   = $this->_lastModified->add($interval);
+        $expire   = $this->_lastModified + $this->_lifetime;
         return $now >= $expire;
     }
 
@@ -109,6 +108,6 @@ class Cache_Casual_Data
      */
     protected function _getCurrentDateTime()
     {
-        return new DateTime;
+        return time();
     }
 }
