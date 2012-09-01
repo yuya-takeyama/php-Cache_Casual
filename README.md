@@ -16,13 +16,13 @@ require_once 'Cache/Casual/Container/File.php';
 $container = new Cache_Casual_Container_File('/tmp');
 $cache = new Cache_Casual($container, 3600);
 
-// Read from cache.
+// Read from cache
 $article = $cache['article'];
 if (is_null($article)) {
     // Cache is not stored
     $article = fetchArticleFromDatabase();
 
-    // Stores your data into cache.
+    // Stores your data into cache
     $cache['article'] = $article;
 }
 ```
