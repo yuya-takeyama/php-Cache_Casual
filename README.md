@@ -32,10 +32,10 @@ Custom cache container
 
 You can write your custom cache container.
 
-Things you have to do is to extend Cache_Casual_ContainerAbstract,  
-and to implement Cache_Casual_ContainerInterface methods.
+Things you have to do is to extend `Cache_Casual_ContainerAbstract`,  
+and to implement `Cache_Casual_ContainerInterface` methods.
 
-For example, see Cache_Casual_Container_Memory class.
+For example, see `Cache_Casual_Container_Memory` class.
 
 Limitation
 ----------
