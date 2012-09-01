@@ -1,0 +1,4 @@
+<?php
+github('https://github.com/mikey179/vfsStream', array(
+    'tag' => 'RELEASE-0.11.0',
+));
