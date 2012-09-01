@@ -1,6 +1,13 @@
 ChangeLog of Cache\_Casual
 ==========================
 
+2012-09-01
+----------
+
+* 1.1.0
+    - Replaced `DateTime` and `DateInterval` with `timestamp()` for PHP 5.2 compatibility
+		- Added `Cache_Casual_Container_PartitionedFile`
+
 2011-08-14
 ----------
 

@@ -23,9 +23,9 @@ class Cache_Casual_Data
     protected $_lifetime;
 
     /**
-     * Last modified time of the content.
+     * Last modified timestamp of the content.
      *
-     * @var DateTime
+     * @var int
      */
     protected $_lastModified;
 
@@ -40,9 +40,9 @@ class Cache_Casual_Data
      * Constructor.
      *
      * @param  array $params
-     *               - int      lifetime
-     *               - DateTime last_modified
-     *               - mixed    content
+     *               - int   lifetime
+     *               - int   last_modified
+     *               - mixed content
      */
     public function __construct($params = array())
     {
@@ -58,9 +58,8 @@ class Cache_Casual_Data
      */
     public function isExpired()
     {
-        $now      = $this->_getCurrentDateTime();
-        $interval = new DateInterval("PT{$this->_lifetime}S");
-        $expire   = $this->_lastModified->add($interval);
+        $now      = $this->_getCurrentTimestamp();
+        $expire   = $this->_lastModified + $this->_lifetime;
         return $now >= $expire;
     }
 
@@ -95,7 +94,7 @@ class Cache_Casual_Data
     /**
      * Gets the last modified time.
      *
-     * @return DateTime
+     * @return int
      */
     public function getLastModified()
     {
@@ -103,12 +102,12 @@ class Cache_Casual_Data
     }
 
     /**
-     * Gets the current DateTime.
+     * Gets the current timestamp.
      *
-     * @return DateTime
+     * @return int
      */
-    protected function _getCurrentDateTime()
+    protected function _getCurrentTimestamp()
     {
-        return new DateTime;
+        return time();
     }
 }

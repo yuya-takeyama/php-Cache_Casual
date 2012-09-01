@@ -25,8 +25,7 @@ class Cache_Casual_DataFactory
     /**
      * Constructor.
      *
-     * @param array $params
-     *              - int lifetime The default lifetime.
+     * @param int $params The default lifetime.
      */
     public function __construct($defaultLifetime)
     {
@@ -43,7 +42,7 @@ class Cache_Casual_DataFactory
     {
         return new Cache_Casual_Data(array(
             'lifetime'      => $this->_defaultLifetime,
-            'last_modified' => new DateTime,
+            'last_modified' => time(),
             'content'       => $content,
         ));
     }
