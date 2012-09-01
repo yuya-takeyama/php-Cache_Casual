@@ -42,7 +42,7 @@ class Cache_Casual_DataFactory
     {
         return new Cache_Casual_Data(array(
             'lifetime'      => $this->_defaultLifetime,
-            'last_modified' => new DateTime,
+            'last_modified' => time(),
             'content'       => $content,
         ));
     }
