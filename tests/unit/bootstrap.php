@@ -10,4 +10,5 @@ set_include_path(
 require_once 'Cache/Casual.php';
 require_once 'Cache/Casual/Container/Memory.php';
 require_once 'Cache/Casual/Container/File.php';
+require_once 'Cache/Casual/Container/PartitionedFile.php';
 require_once 'vfsStream.php';
