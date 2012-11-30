@@ -18,8 +18,8 @@
  */
 class Cache_Casual_Container_NamespacePdo extends Cache_Casual_ContainerAbstract
 {
-    const MAX_NAMEPACE_LENGTH = 64;
-    const MAX_KEY_LENGTH      = 255;
+    const MAX_NAMESPACE_LENGTH = 64;
+    const MAX_KEY_LENGTH       = 255;
 
     /**
      * @var PDO
@@ -62,7 +62,9 @@ class Cache_Casual_Container_NamespacePdo extends Cache_Casual_ContainerAbstract
      */
     public function set($key, $value)
     {
-        $sql = 'INSERT INTO `' . $this->_table . '` ' .
+        $key = $this->_convertKey($key);
+
+        $sql = 'REPLACE INTO `' . $this->_table . '` ' .
             '(`namespace`, `key`, `content`, `lifetime`, `last_modified`) ' .
             'VALUES (?, ?, ?, ?, ?)';
         $stmt = $this->_pdo->prepare($sql);
@@ -70,7 +72,7 @@ class Cache_Casual_Container_NamespacePdo extends Cache_Casual_ContainerAbstract
         $data = $this->createData($value);
 
         $stmt->bindValue(1, $this->_namespace, PDO::PARAM_STR);
-        $stmt->bindValue(2, $this->getKey(), PDO::PARAM_STR);
+        $stmt->bindValue(2, $key, PDO::PARAM_STR);
         $stmt->bindValue(3, serialize($data->getContent()), PDO::PARAM_STR);
         $stmt->bindValue(4, $data->getLifetime(), PDO::PARAM_INT);
         $stmt->bindValue(5, $data->getLastModified(), PDO::PARAM_INT);
@@ -137,19 +139,21 @@ class Cache_Casual_Container_NamespacePdo extends Cache_Casual_ContainerAbstract
     {
         $key = $this->_convertKey($key);
 
-        $sql = 'SELECT `namespace`, `key`, `content`, `lifetime`, `last_modified` FROM `' . $this->_table . '`' .
-            'WHERE `namespace` = ? AND `key` = `?` LIMIT 1';
+        $sql = 'SELECT `namespace`, `key`, `content`, `lifetime`, `last_modified` FROM `' . $this->_table . '` ' .
+            'WHERE `namespace` = ? AND `key` = ? LIMIT 1';
         $stmt = $this->_pdo->prepare($sql);
 
         $stmt->bindValue(1, $this->_namespace, PDO::PARAM_STR);
         $stmt->bindValue(2, $key, PDO::PARAM_STR);
 
+        $stmt->execute();
+
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($data) {
+        if ($data !== false) {
             return new Cache_Casual_Data(array(
-                'lifetime'      => $data['lifetime'],
-                'last_modified' => $data['last_modified'],
+                'lifetime'      => (int)$data['lifetime'],
+                'last_modified' => (int)$data['last_modified'],
                 'content'       => unserialize($data['content']),
             ));
         }
