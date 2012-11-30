@@ -1,6 +1,12 @@
 ChangeLog of Cache\_Casual
 ==========================
 
+2012-11-30
+----------
+
+* 1.1.1
+		- Added `Cache_Casual_Container_NamespacePdo`
+
 2012-09-01
 ----------
 
